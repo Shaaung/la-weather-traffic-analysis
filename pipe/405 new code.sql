@@ -387,7 +387,8 @@ SELECT
     Start_Lng,
     Start_Lat,
     SUNRISE_SUNSET,
-    Precipitation_Level
+    Precipitation_Level,
+    low_visibility
 FROM FINAL.accident_weather_filtered;
 
 
@@ -465,42 +466,4 @@ SELECT *
 FROM accident_weather_simple
 ORDER BY accident_year DESC, accident_month_num ASC;
 
-----------------------------map geojson file--------------------------------
--- 1. file format
-CREATE OR REPLACE FILE FORMAT geojson_ff
-TYPE = JSON;
 
--- 2. stage
-CREATE OR REPLACE STAGE geo_stage
-URL = 'gcs://mgmtmsa405-26s-team13-data/processed/geo/'
-STORAGE_INTEGRATION = gcs_int
-FILE_FORMAT = geojson_ff;
-
--- 3. check files
-LIST @geo_stage;
-
--- 4. raw geojson table
-CREATE OR REPLACE TABLE STAGING.geojson_raw (
-    data VARIANT
-);
-
--- 5. load only the CSA geojson file
-COPY INTO STAGING.geojson_raw
-FROM (
-    SELECT $1
-    FROM @geo_stage
-)
-PATTERN = '.*Countywide_Statistical_Areas_\\(CSAs\\)\\.geojson';
-
--- 6. parse polygons
-CREATE OR REPLACE TABLE FINAL.csa_boundaries AS
-SELECT
-    value:properties AS properties,
-    TO_GEOGRAPHY(value:geometry) AS geometry
-FROM STAGING.geojson_raw,
-LATERAL FLATTEN(input => data:features);
-
--- 7. preview
-SELECT *
-FROM FINAL.csa_boundaries
-LIMIT 10;
