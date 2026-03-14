@@ -44,11 +44,10 @@ def main():
             .fillna(0, subset=["PRCP", "WT01", "WT02", "WT08"])
             .withColumn("Weather_Date", F.to_date("DATE"))
             # Convert daily precipitation to an hourly estimate
-            .withColumn("Hourly_PRCP", F.col("PRCP") / 24.0)
             .withColumn("Precipitation_Level",
-                F.when(F.col("Hourly_PRCP") > 0.3, "heavy rain")
-                 .when(F.col("Hourly_PRCP") >= 0.1, "moderate rain")
-                 .when(F.col("Hourly_PRCP") > 0, "light rain")
+                F.when(F.col("PRCP") > 1.0, "heavy rain")
+                 .when(F.col("PRCP") >= 0.5, "moderate rain")
+                 .when(F.col("PRCP") > 0, "light rain")
                  .otherwise("no rain"))
             # Binary flag for low visibility conditions
             .withColumn("low_visibility",

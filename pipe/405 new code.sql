@@ -354,9 +354,9 @@ SELECT
     MONTH("DATE") AS weather_month_num,
     MONTHNAME("DATE") AS weather_month,
     CASE
-        WHEN AVG_DAILY_PRCP / 24.0 < 0.00000001 THEN 'No Rain'
-        WHEN AVG_DAILY_PRCP / 24.0 <= 0.1 THEN 'Light Rain'
-        WHEN AVG_DAILY_PRCP / 24.0 <= 0.3 THEN 'Moderate Rain'
+        WHEN AVG_DAILY_PRCP < 0.00000001 THEN 'No Rain'
+        WHEN AVG_DAILY_PRCP <= 0.5 THEN 'Light Rain'
+        WHEN AVG_DAILY_PRCP <= 1 THEN 'Moderate Rain'
         ELSE 'Heavy Rain'
     END AS rain_intensity_baseline
 FROM STAGING.la_weather_daily_baseline__build;
