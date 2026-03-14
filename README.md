@@ -90,6 +90,16 @@ Because our team GCS bucket prevents public access, the raw datasets are provide
 
 ## Accident Dataset
 
+* Lists out the car accidents that occurred in the United States, including date, time, location, and severity (measures impact to traffic, value 1-4, 1 least impact).
+* Time frame: 2016/2/1 – 2023/3/31
+* Format: csv file
+
+
+Original Source:
+```
+https://www.kaggle.com/datasets/sobhanmoosavi/us-accidents
+```
+
 Google Drive download link:
 
 ```
@@ -103,6 +113,17 @@ wget "https://drive.google.com/uc?id=1f0mnVjNCNrM1oZkXZmUQK4Z8eto58t-Q&export=do
 ```
 
 ## Weather Dataset
+
+* Lists out the daily weather data of all the weather stations in Los Angeles County, including wind, temperature, and precipitation
+* Time frame: 2016/2/1 – 2023/3/31
+* Format: csv file
+* Note: Due to data availability constraints, meteorological variables are observed at the daily level. We assume that the effects of severe weather persist throughout the day in which they occur and that all accident activities on that day are exposed to the same weather conditions.)
+
+
+Original Source:
+```
+https://www.ncei.noaa.gov/cdo-web/search
+```
 
 Download link:
 
@@ -213,9 +234,7 @@ gcloud storage cp accidents.csv gs://$BUCKET/raw/
 gcloud storage cp weather.csv gs://$BUCKET/weather/
 ```
 
-Note 1: Google Cloud Storage uses **object prefixes rather than real directories**, so the directory structure will automatically appear when files are uploaded.
-
-Note 2: Since the map files are already cleaned and will be used for Snowflake storage and Tableau visualization, they do not require preprocessing and are uploaded directly to the `/processed` object prefix.
+Note: Google Cloud Storage uses object prefixes rather than real directories, so the directory structure will automatically appear when files are uploaded.
 
 Expected bucket layout:
 
@@ -396,7 +415,7 @@ The script will:
 1. Load Snowflake credentials from `pipeline.env`
 2. Submit a PySpark job to Dataproc Serverless
 3. Process accident and weather datasets
-4. Write curated datasets to GCS
+4. Write processed datasets to GCS
 5. Execute `snowflake-load.py`, which runs `405 new code.sql` to load and transform data in Snowflake
 
 ---
