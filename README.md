@@ -447,14 +447,13 @@ processed/
 Visualization dashboard:
 
 ```
-<INSERT TABLEAU PUBLIC LINK>
+https://public.tableau.com/views/405Final_Group13_2026/SevereAccidentsAnalysis?:language=en-US&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 ```
 
 The dashboard shows:
 
 - accident counts, by weather types
-- accident counts per day, by weather type
-- accident severity distribution, by weather type
+- severe accident rate, by weather type
 - geographic distribution for severe car accidents
 
 ---
