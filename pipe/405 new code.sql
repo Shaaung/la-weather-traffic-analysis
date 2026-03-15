@@ -387,9 +387,9 @@ SELECT
     Start_Lng,
     Start_Lat,
     SUNRISE_SUNSET,
-    Precipitation_Level,
+    precipitation_level,
     low_visibility
-FROM FINAL.accident_weather_filtered;
+FROM STAGING.accident_weather_filtered__build;
 
 
 -- =====================================================
@@ -461,9 +461,13 @@ SELECT *
 FROM FINAL.rain_weather_rollup
 ORDER BY weather_year DESC, weather_month_num ASC;
 
-
 SELECT * 
-FROM accident_weather_simple
+FROM FINAL.accident_weather_simple
 ORDER BY accident_year DESC, accident_month_num ASC;
+
+
+
+
+
 
 
