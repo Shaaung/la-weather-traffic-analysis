@@ -18,6 +18,16 @@ The full workflow processes raw datasets, transforms them using PySpark, stores 
 
 ---
 
+## Interactive Dashboard
+
+Explore the team's interactive Tableau dashboard:
+
+[**LA Weather & Traffic — Severe Accidents Analysis**](https://public.tableau.com/app/profile/julia.low5613/viz/405Final_Group13_2026/SevereAccidentsAnalysis)
+
+This dashboard was developed as part of our Group 13 team project and published on a teammate's Tableau Public account.
+
+---
+
 # Pipeline Architecture
 
 The pipeline follows the architecture below:
